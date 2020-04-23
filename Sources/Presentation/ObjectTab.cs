@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -66,6 +67,13 @@ namespace TrainDB {
             Controls.Add(ItemListView);
         }
 
+        #region P/Invokes for ListView styling
+
+        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        internal static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
+
+        #endregion
+
         #region Overriden Control Event Handlers
 
         /// <summary>
@@ -76,7 +84,7 @@ namespace TrainDB {
             base.OnHandleCreated(eventArgs);
 
             // obtain native theme style on list view items
-            NativeMethods.SetWindowTheme(ItemListView.Handle, "explorer", null);
+            SetWindowTheme(ItemListView.Handle, "explorer", null);
         }
 
         #endregion

@@ -77,7 +77,6 @@
     </Compile>
     <Compile Include="Sources\Application.cs" />
     <Compile Include="Sources\Persistence\DatabaseBroker.cs" />
-    <Compile Include="Sources\Presentation\NativeMethods.cs" />
     <Compile Include="Sources\Presentation\ObjectTab.cs">
       <SubType>Component</SubType>
     </Compile>
