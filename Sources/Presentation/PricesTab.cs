@@ -62,7 +62,7 @@ namespace TrainDB {
             ItemListView.Columns.AddRange(new[] {
                 new ColumnHeader { Text = "Product" },
                 new ColumnHeader { Text = "Date" },
-                new ColumnHeader { Text = "Value (€)" }
+                new ColumnHeader { Text = "Value (€/t)" }
             });
 
             ItemListView.Items.Clear();

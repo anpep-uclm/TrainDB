@@ -75,11 +75,11 @@
             // 
             // priceCurrencyLabel
             // 
-            this.priceCurrencyLabel.Location = new System.Drawing.Point(269, 98);
+            this.priceCurrencyLabel.Location = new System.Drawing.Point(235, 98);
             this.priceCurrencyLabel.Name = "priceCurrencyLabel";
-            this.priceCurrencyLabel.Size = new System.Drawing.Size(29, 21);
+            this.priceCurrencyLabel.Size = new System.Drawing.Size(63, 21);
             this.priceCurrencyLabel.TabIndex = 14;
-            this.priceCurrencyLabel.Text = "EUR";
+            this.priceCurrencyLabel.Text = "EUR/tonne";
             this.priceCurrencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // priceInput
@@ -92,7 +92,7 @@
             0,
             0});
             this.priceInput.Name = "priceInput";
-            this.priceInput.Size = new System.Drawing.Size(161, 21);
+            this.priceInput.Size = new System.Drawing.Size(127, 21);
             this.priceInput.TabIndex = 6;
             this.priceInput.ThousandsSeparator = true;
             this.priceInput.ValueChanged += new System.EventHandler(this.OnPriceInputValueChanged);
