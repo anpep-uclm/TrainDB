@@ -15,6 +15,10 @@
         /// </summary>
         public TrainType Type { get; set; }
 
+        /// <summary>
+        ///     Class constructor
+        /// </summary>
+        /// <param name="id">Train ID</param>
         public Train(string id = null) {
             ID = id;
             DAO = new TrainDAO();

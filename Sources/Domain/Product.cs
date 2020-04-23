@@ -15,6 +15,10 @@
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        ///     Class constructor
+        /// </summary>
+        /// <param name="id">Product ID</param>
         public Product(long id = 0) {
             ID = id;
             DAO = new ProductDAO();

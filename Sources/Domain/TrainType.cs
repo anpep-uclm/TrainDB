@@ -20,6 +20,10 @@
         /// </summary>
         public long MaximumCapacity { get; set; }
 
+        /// <summary>
+        ///     Class constructor
+        /// </summary>
+        /// <param name="id">Train type ID</param>
         public TrainType(long id = 0) {
             ID = id;
             DAO = new TrainTypeDAO();
