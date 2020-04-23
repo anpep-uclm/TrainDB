@@ -112,6 +112,12 @@ namespace TrainDB {
             return this.connection.LastInsertRowId;
         }
 
+        /// <summary>
+        ///     Executes a query command on the database
+        /// </summary>
+        /// <param name="sql">Command text</param>
+        /// <param name="parameters">A variadic set of parameter tuples to be bound to the query</param>
+        /// <returns>A list of rows returned by the query</returns>
         public IEnumerable<Dictionary<string, object>> ExecuteQuery(string sql, params (string name, object value)[] parameters) {
             // create command
             using (var cmd = new SQLiteCommand(sql, this.connection)) {
