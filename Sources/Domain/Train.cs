@@ -24,5 +24,13 @@
             DAO = new TrainDAO();
             Type = new TrainType();
         }
+
+        /// <summary>
+        ///     Obtains a string representation for this train
+        /// </summary>
+        /// <returns>A string</returns>
+        public override string ToString() {
+            return $"{ID} ({Type?.Description})";
+        }
     }
 }
