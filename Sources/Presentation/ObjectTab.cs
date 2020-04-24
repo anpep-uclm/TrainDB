@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TrainDB {
@@ -11,6 +10,8 @@ namespace TrainDB {
     /// </summary
     /// <remarks>This class avoids duplicating the UI logic for each table in the main form.</remarks>
     public abstract class ObjectTab : TabPage {
+        private bool readOnly;
+
         private readonly MenuItem newContextMenuItem;
         private readonly MenuItem refreshContextMenuItem;
         private readonly MenuItem deleteContextMenuItem;
@@ -28,6 +29,23 @@ namespace TrainDB {
                 StatusTextChanged?.Invoke(this, new EventArgs());
             }
         }
+
+        /// <summary>
+        ///     Whether or not New and Delete operations should be allowed on objects
+        /// </summary>
+        public bool ReadOnly {
+            get => this.readOnly;
+            set {
+                this.readOnly = value;
+                this.newContextMenuItem.Enabled = !value;
+                this.deleteContextMenuItem.Enabled = !value;
+            }
+        }
+
+        /// <summary>
+        ///     Obtains the number of items currently displayed on the internal list view
+        /// </summary>
+        public int ItemCount => ItemListView?.Items.Count ?? 0;
 
         /// <summary>
         ///     Backing list view for this object type
@@ -145,7 +163,7 @@ namespace TrainDB {
         /// <param name="sender">Control that triggered this event</param>
         /// <param name="eventArgs">Arguments associated with this event</param>
         protected void OnItemListViewSelectionChanged(object sender, EventArgs eventArgs) {
-            deleteContextMenuItem.Enabled = ItemListView.SelectedItems.Count != 0;
+            deleteContextMenuItem.Enabled = !this.readOnly && ItemListView.SelectedItems.Count != 0;
             propertiesContextMenuItem.Enabled = ItemListView.SelectedItems.Count == 1;
 
             StatusText = $"{ItemListView.Items.Count} item(s) total";
