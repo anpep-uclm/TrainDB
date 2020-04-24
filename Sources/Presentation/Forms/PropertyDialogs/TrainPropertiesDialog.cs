@@ -164,6 +164,28 @@ namespace TrainDB {
         }
 
         /// <summary>
+        ///     Triggered when the date range filter value changes
+        /// </summary>
+        /// <param name="sender">Control that initiated the event</param>
+        /// <param name="eventArgs">Arguments associated with this event</param>
+        private void OnDateFilterChanged(object sender, EventArgs eventArgs) {
+            var dateStart = DateTime.MinValue;
+            var dateEnd = DateTime.MaxValue;
+
+            if (this.dateStartFilter.Checked)
+                dateStart = this.dateStartFilter.Value;
+            if (this.dateEndFilter.Checked)
+                dateEnd = this.dateEndFilter.Value;
+
+            try {
+                this.productsTab.DateRangeFilter = (dateStart, dateEnd);
+                this.tripCountTextBox.Text = this.productsTab.ItemCount.ToString("N0");
+            } catch (InvalidOperationException exception) {
+                MessageBox.Show(this, exception.Message.ToString(), System.Windows.Forms.Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
         ///     Triggered when the Apply button is clicked
         /// </summary>
         /// <param name="sender">Control that initiated the event</param>
@@ -184,23 +206,7 @@ namespace TrainDB {
                 Close();
             }
         }
+
         #endregion
-
-        private void OnDateFilterChanged(object sender, EventArgs eventArgs) {
-            var dateStart = DateTime.MinValue;
-            var dateEnd = DateTime.MaxValue;
-
-            if (this.dateStartFilter.Checked)
-                dateStart = this.dateStartFilter.Value;
-            if (this.dateEndFilter.Checked)
-                dateEnd = this.dateEndFilter.Value;
-
-            try {
-                this.productsTab.DateRangeFilter = (dateStart, dateEnd);
-                this.tripCountTextBox.Text = this.productsTab.ItemCount.ToString("N0");
-            } catch (InvalidOperationException exception) {
-                MessageBox.Show(this, exception.Message.ToString(), System.Windows.Forms.Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 }

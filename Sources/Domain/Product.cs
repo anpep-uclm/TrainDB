@@ -16,6 +16,14 @@
         public string Description { get; set; }
 
         /// <summary>
+        ///     Number of times this product has been transported.
+        /// </summary>
+        /// <remarks>
+        ///     This is only relevant for querying the product ranking.
+        /// </remarks>
+        public long? ProductCount { get; set; }
+
+        /// <summary>
         ///     Class constructor
         /// </summary>
         /// <param name="id">Product ID</param>

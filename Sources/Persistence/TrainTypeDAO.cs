@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -43,6 +44,43 @@ namespace TrainDB {
             }
 
             return TrainTypes;
+        }
+
+        /// <summary>
+        ///     Obtains a ranking of the type of trains that have made the most trips
+        ///     within the specified date range
+        /// </summary>
+        /// <param name="dateRange">The date range</param>
+        /// <returns>A list of <see cref="TrainType"/>s.</returns>
+        public List<TrainType> QueryRanking((DateTime Start, DateTime End) dateRange) {
+            var rows = DatabaseBroker.GetInstance(this.path).ExecuteQuery(@"
+                SELECT
+	                COUNT(TrainTypes.TrainTypeID) AS TripCount,
+	                TrainTypes.TrainTypeID,
+	                TrainTypes.TrainTypeDescription,
+                    TrainTypes.MaxCapacity
+                FROM TrainTypes
+                JOIN
+	                Trains ON Trains.TrainType = TrainTypes.TrainTypeID,
+	                Trips ON Trips.Train = Trains.TrainID
+                WHERE
+	                Trips.TripDate BETWEEN @start AND @end
+                GROUP BY TrainTypes.TrainTypeID
+                ORDER BY TripCount DESC",
+                
+                ("start", dateRange.Start.ToSQLiteDateFormat()),
+                ("end", dateRange.End.ToSQLiteDateFormat()));
+
+            var trainTypes = new List<TrainType>();
+            foreach (var row in rows) {
+                trainTypes.Add(new TrainType((long) row["TrainTypeID"]) {
+                    Description = (string) row["TrainTypeDescription"],
+                    MaximumCapacity = (long) row["MaxCapacity"],
+                    TripCount = (long) row["TripCount"]
+                });
+            }
+
+            return trainTypes;
         }
 
         /// <summary>

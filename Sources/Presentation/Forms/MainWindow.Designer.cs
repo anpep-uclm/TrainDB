@@ -30,16 +30,16 @@
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.editMenuItem = new System.Windows.Forms.MenuItem();
+            this.toolsMenuItem = new System.Windows.Forms.MenuItem();
+            this.trainTypeRankingMenuItem = new System.Windows.Forms.MenuItem();
+            this.productRankingMenuItem = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.mostProfitableTripMenuItem = new System.Windows.Forms.MenuItem();
             this.helpMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.statusBar = new System.Windows.Forms.StatusBar();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.mainTabControl = new System.Windows.Forms.TabControl();
-            this.toolsMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -77,6 +77,40 @@
             this.editMenuItem.Enabled = false;
             this.editMenuItem.Index = 1;
             this.editMenuItem.Text = "&Edit";
+            // 
+            // toolsMenuItem
+            // 
+            this.toolsMenuItem.Enabled = false;
+            this.toolsMenuItem.Index = 2;
+            this.toolsMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.trainTypeRankingMenuItem,
+            this.productRankingMenuItem,
+            this.menuItem3,
+            this.mostProfitableTripMenuItem});
+            this.toolsMenuItem.Text = "&Tools";
+            // 
+            // trainTypeRankingMenuItem
+            // 
+            this.trainTypeRankingMenuItem.Index = 0;
+            this.trainTypeRankingMenuItem.Text = "Historic Train Type Ranking";
+            this.trainTypeRankingMenuItem.Click += new System.EventHandler(this.OnTrainTypeRankingMenuItemClick);
+            // 
+            // productRankingMenuItem
+            // 
+            this.productRankingMenuItem.Index = 1;
+            this.productRankingMenuItem.Text = "Historic Product Ranking";
+            this.productRankingMenuItem.Click += new System.EventHandler(this.OnProductRankingMenuItemClick);
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 2;
+            this.menuItem3.Text = "-";
+            // 
+            // mostProfitableTripMenuItem
+            // 
+            this.mostProfitableTripMenuItem.Index = 3;
+            this.mostProfitableTripMenuItem.Text = "Most Profitable Trip Information";
+            this.mostProfitableTripMenuItem.Click += new System.EventHandler(this.OnMostProfitableTripMenuItemClick);
             // 
             // helpMenuItem
             // 
@@ -118,37 +152,6 @@
             this.mainTabControl.Visible = false;
             this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.OnTabChanged);
             // 
-            // toolsMenuItem
-            // 
-            this.toolsMenuItem.Enabled = false;
-            this.toolsMenuItem.Index = 2;
-            this.toolsMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem1,
-            this.menuItem2,
-            this.menuItem3,
-            this.menuItem4});
-            this.toolsMenuItem.Text = "&Tools";
-            // 
-            // menuItem1
-            // 
-            this.menuItem1.Index = 0;
-            this.menuItem1.Text = "Historic Train Type Ranking";
-            // 
-            // menuItem2
-            // 
-            this.menuItem2.Index = 1;
-            this.menuItem2.Text = "Historic Product Ranking";
-            // 
-            // menuItem3
-            // 
-            this.menuItem3.Index = 2;
-            this.menuItem3.Text = "-";
-            // 
-            // menuItem4
-            // 
-            this.menuItem4.Index = 3;
-            this.menuItem4.Text = "Most Profitable Trip Information";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,9 +183,9 @@
         private System.Windows.Forms.TabControl mainTabControl;
         private System.Windows.Forms.MenuItem editMenuItem;
         private System.Windows.Forms.MenuItem toolsMenuItem;
-        private System.Windows.Forms.MenuItem menuItem1;
-        private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.MenuItem trainTypeRankingMenuItem;
+        private System.Windows.Forms.MenuItem productRankingMenuItem;
         private System.Windows.Forms.MenuItem menuItem3;
-        private System.Windows.Forms.MenuItem menuItem4;
+        private System.Windows.Forms.MenuItem mostProfitableTripMenuItem;
     }
 }

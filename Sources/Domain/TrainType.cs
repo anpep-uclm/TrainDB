@@ -21,6 +21,14 @@
         public long MaximumCapacity { get; set; }
 
         /// <summary>
+        ///     Number of trips this train type has made
+        /// </summary>
+        /// <remarks>
+        ///     This property is used by the <see cref="TrainTypeRankingTab"/>
+        /// </remarks>
+        public long? TripCount { get; set; }
+
+        /// <summary>
         ///     Class constructor
         /// </summary>
         /// <param name="id">Train type ID</param>

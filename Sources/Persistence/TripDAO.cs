@@ -51,6 +51,31 @@ namespace TrainDB {
         }
 
         /// <summary>
+        ///     Obtains information about the most profitable trip
+        /// </summary>
+        /// <returns>A dictionary of columns and values</returns>
+        public Dictionary<string, object> QueryMostProfitableTrip() {
+            return DatabaseBroker.GetInstance(this.path).ExecuteQuery(@"
+                SELECT
+	                Trips.TripDate,
+                    Trains.TrainID,
+                    TrainTypes.TrainTypeDescription,
+                    Products.ProductID,
+                    Products.ProductDescription,
+                    Trips.TonsTransported,
+                    Prices.EurosPerTon,
+                    (Trips.TonsTransported * Prices.EurosPerTon) AS TripValue
+                FROM Trips
+                JOIN
+                    Products ON Trips.Product = Products.ProductID,
+                    Prices ON Prices.Product = Products.ProductID AND Trips.TripDate >= Prices.PriceDate,
+                    Trains ON Trains.TrainID = Trips.Train,
+                    TrainTypes ON Trains.TrainType = TrainTypes.TrainTypeID
+                ORDER BY TripValue DESC
+                LIMIT 1").First();
+        }
+
+        /// <summary>
         ///     Fills a Trip instance with data retrieved from the database
         /// </summary>
         /// <param name="trip">The target instance</param>

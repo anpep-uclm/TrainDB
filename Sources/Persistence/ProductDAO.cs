@@ -75,6 +75,38 @@ namespace TrainDB {
         }
 
         /// <summary>
+        ///     Obtains a ranking of the products that have been transported the most
+        ///     within the specified date range
+        /// </summary>
+        /// <param name="dateRange">The date range</param>
+        /// <returns>A list of <see cref="Product"/>s.</returns>
+        public List<Product> QueryRanking((DateTime Start, DateTime End) dateRange) {
+            var rows = DatabaseBroker.GetInstance(this.path).ExecuteQuery(@"
+                SELECT
+	                COUNT(Products.ProductID) AS ProductCount,
+	                Products.ProductID,
+	                Products.ProductDescription
+                FROM Products
+                JOIN Trips ON Trips.Product = Products.ProductID
+                WHERE Trips.TripDate BETWEEN @start AND @end
+                GROUP BY Products.ProductID
+                ORDER BY ProductCount DESC",
+
+                ("start", dateRange.Start.ToSQLiteDateFormat()),
+                ("end", dateRange.End.ToSQLiteDateFormat()));
+
+            var products = new List<Product>();
+            foreach (var row in rows) {
+                products.Add(new Product((long) row["ProductID"]) {
+                    Description = (string) row["ProductDescription"],
+                    ProductCount = (long) row["ProductCount"]
+                });
+            }
+
+            return products;
+        }
+
+        /// <summary>
         ///     Fills a Product instance with data retrieved from the database
         /// </summary>
         /// <param name="product">The target instance</param>

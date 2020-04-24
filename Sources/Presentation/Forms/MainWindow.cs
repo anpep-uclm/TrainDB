@@ -111,6 +111,36 @@ namespace TrainDB {
         }
 
         /// <summary>
+        ///     Triggered when the "Historic Train Type Trip Ranking" menu item is clicked
+        /// </summary>
+        /// <param name="sender">Control that triggered the event</param>
+        /// <param name="eventArgs">Arguments for this event</param>
+        private void OnTrainTypeRankingMenuItemClick(object sender, EventArgs eventArgs) {
+            using (var dialog = new TrainTypeRankingDialog())
+                dialog.ShowDialog(this);
+        }
+
+        /// <summary>
+        ///     Triggered when the "Historic Product Ranking" menu item is clicked
+        /// </summary>
+        /// <param name="sender">Control that triggered the event</param>
+        /// <param name="eventArgs">Arguments for this event</param>
+        private void OnProductRankingMenuItemClick(object sender, EventArgs eventArgs) {
+            using (var dialog = new ProductRankingDialog())
+                dialog.ShowDialog(this);
+        }
+
+        /// <summary>
+        ///     Triggered when the "Most Profitable Trip" menu item is clicked
+        /// </summary>
+        /// <param name="sender">Control that initated this event</param>
+        /// <param name="eventArgs">Arguments for this event</param>
+        private void OnMostProfitableTripMenuItemClick(object sender, EventArgs eventArgs) {
+            using (var dialog = new MostProfitableTripDialog())
+                dialog.ShowDialog(this);
+        }
+
+        /// <summary>
         ///     Triggered when the status text of the currently selected object tab changes
         /// </summary>
         /// <param name="sender">Control that triggered the event</param>
