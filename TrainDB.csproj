@@ -56,8 +56,10 @@
     <Compile Include="Sources\DateTimeExtensionMethods.cs" />
     <Compile Include="Sources\Domain\Price.cs" />
     <Compile Include="Sources\Domain\Product.cs" />
+    <Compile Include="Sources\Domain\Trip.cs" />
     <Compile Include="Sources\Persistence\PriceDAO.cs" />
     <Compile Include="Sources\Persistence\ProductDAO.cs" />
+    <Compile Include="Sources\Persistence\TripDAO.cs" />
     <Compile Include="Sources\Presentation\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +80,15 @@
     <Compile Include="Sources\Application.cs" />
     <Compile Include="Sources\Persistence\DatabaseBroker.cs" />
     <Compile Include="Sources\Presentation\ObjectTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Sources\Presentation\TripPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sources\Presentation\TripPropertiesDialog.Designer.cs">
+      <DependentUpon>TripPropertiesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Presentation\TripsTab.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Sources\Presentation\PricesTab.cs">
@@ -150,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sources\Presentation\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Presentation\TripPropertiesDialog.resx">
+      <DependentUpon>TripPropertiesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sources\Presentation\PricePropertiesDialog.resx">
       <DependentUpon>PricePropertiesDialog.cs</DependentUpon>
