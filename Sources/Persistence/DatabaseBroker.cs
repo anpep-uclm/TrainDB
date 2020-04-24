@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace TrainDB {
     /// <summary>
@@ -89,9 +90,13 @@ namespace TrainDB {
         public int ExecuteNonQuery(string sql, params (string name, object value)[] parameters) {
             // create command
             using (var cmd = new SQLiteCommand(sql, this.connection)) {
+                Debug.WriteLine(sql);
+
                 // bind command parameters
-                foreach (var (name, value) in parameters)
+                foreach (var (name, value) in parameters) {
                     cmd.Parameters.AddWithValue('@' + name, value);
+                    Debug.WriteLine($"    {name}: {value}");
+                }
                 cmd.Prepare();
 
                 // execute statement
@@ -121,9 +126,13 @@ namespace TrainDB {
         public IEnumerable<Dictionary<string, object>> ExecuteQuery(string sql, params (string name, object value)[] parameters) {
             // create command
             using (var cmd = new SQLiteCommand(sql, this.connection)) {
+                Debug.WriteLine(sql);
+
                 // bind command parameters
-                foreach (var (name, value) in parameters)
+                foreach (var (name, value) in parameters) {
                     cmd.Parameters.AddWithValue('@' + name, value);
+                    Debug.WriteLine($"    {name}: {value}");
+                }
                 cmd.Prepare();
 
                 // read rows returned by the database
