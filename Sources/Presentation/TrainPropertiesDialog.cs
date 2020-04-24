@@ -15,6 +15,11 @@ namespace TrainDB {
         private bool isTrainTypeComboBoxPopulating;
 
         /// <summary>
+        ///     Embedded products object tab
+        /// </summary>
+        private ProductsTab productsTab;
+
+        /// <summary>
         ///     Train being edited
         /// </summary>
         public Train Train { get; }
@@ -31,6 +36,17 @@ namespace TrainDB {
 
             PopulateTrainTypes();
             UpdateControlState();
+
+            if (this.didTrainExist) {
+                this.productsTab = new ProductsTab();
+                this.productsTab.TrainFilter = Train;
+                this.productsTab.DateRangeFilter = (DateTime.MinValue, DateTime.MaxValue);
+                productContainerTabControl.TabPages.Add(this.productsTab);
+                this.productsTab.RenderItems();
+                this.tripCountTextBox.Text = this.productsTab.ItemCount.ToString("N0");
+            } else {
+                this.mainTabControl.TabPages.RemoveByKey(this.productsTabPage.Name);
+            }
         }
 
         /// <summary>
@@ -126,12 +142,12 @@ namespace TrainDB {
         /// <param name="eventArgs">Arguments associated with this event</param>
         private void OnAddNewTypeButtonClick(object sender, EventArgs eventArgs) {
             using (var dialog = new TrainTypePropertiesDialog(new TrainType())) {
-                if (dialog.ShowDialog(this) != DialogResult.Cancel) {
+                if (dialog.ShowDialog(this) != DialogResult.Cancel)
                     Train.Type = dialog.TrainType;
-                    PopulateTrainTypes();
-                    UpdateControlState();
-                }
             }
+
+            PopulateTrainTypes();
+            UpdateControlState();
         }
 
         /// <summary>
@@ -140,12 +156,11 @@ namespace TrainDB {
         /// <param name="sender">Control that initiated the event</param>
         /// <param name="eventArgs">Arguments associated with this event</param>
         private void OnTrainTypePropertiesButtonClick(object sender, EventArgs eventArgs) {
-            using (var dialog = new TrainTypePropertiesDialog(Train.Type)) {
-                if (dialog.ShowDialog(this) != DialogResult.Cancel) {
-                    PopulateTrainTypes();
-                    UpdateControlState();
-                }
-            }
+            using (var dialog = new TrainTypePropertiesDialog(Train.Type))
+                dialog.ShowDialog(this);
+
+            PopulateTrainTypes();
+            UpdateControlState();
         }
 
         /// <summary>
@@ -170,5 +185,22 @@ namespace TrainDB {
             }
         }
         #endregion
+
+        private void OnDateFilterChanged(object sender, EventArgs eventArgs) {
+            var dateStart = DateTime.MinValue;
+            var dateEnd = DateTime.MaxValue;
+
+            if (this.dateStartFilter.Checked)
+                dateStart = this.dateStartFilter.Value;
+            if (this.dateEndFilter.Checked)
+                dateEnd = this.dateEndFilter.Value;
+
+            try {
+                this.productsTab.DateRangeFilter = (dateStart, dateEnd);
+                this.tripCountTextBox.Text = this.productsTab.ItemCount.ToString("N0");
+            } catch (InvalidOperationException exception) {
+                MessageBox.Show(this, exception.Message.ToString(), System.Windows.Forms.Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
