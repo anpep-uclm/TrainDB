@@ -3,10 +3,37 @@ using System.Windows.Forms;
 
 namespace TrainDB {
     public sealed class ProductsTab : ObjectTab {
+        private Train trainFilter;
+        private (DateTime, DateTime)? dateRangeFilter;
+
         /// <summary>
         ///     Backing DAO for the products table
         /// </summary>
         private readonly ProductDAO dao;
+
+        /// <summary>
+        ///     Filters products transported in trips made by this train
+        /// </summary>
+        public Train TrainFilter { 
+            get => trainFilter; 
+            set {
+                trainFilter = value;
+                RenderItems();
+            }
+        }
+
+        /// <summary>
+        ///     Filters products transported by trips made on this date range
+        /// </summary>
+        public (DateTime Start, DateTime End)? DateRangeFilter {
+            get => dateRangeFilter;
+            set {
+                if (value?.Start > value?.End)
+                    throw new InvalidOperationException("An invalid date range was selected");
+                dateRangeFilter = value;
+                RenderItems();
+            }
+        }
 
         /// <summary>
         ///     Initializes the products tab
@@ -55,6 +82,9 @@ namespace TrainDB {
         ///     Adds the pertinent rows to the list view
         /// </summary>
         public override void RenderItems() {
+            // disallow Delete and New operations if we're showing filtered data
+            ReadOnly = !(this.trainFilter is null) || !(this.dateRangeFilter is null);
+
             ItemListView.BeginUpdate();
 
             ItemListView.Columns.Clear();
@@ -64,7 +94,7 @@ namespace TrainDB {
             });
 
             ItemListView.Items.Clear();
-            foreach (var product in this.dao.ReadAll()) {
+            foreach (var product in this.dao.ReadAll(this.trainFilter, this.dateRangeFilter)) {
                 ItemListView.Items.Add(new ListViewItem(new[] {
                     '#' + product.ID.ToString(),
                     product.Description

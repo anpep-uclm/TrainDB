@@ -15,7 +15,6 @@ namespace TrainDB {
         public PricesTab(string path = null) {
             this.dao = new PriceDAO(path);
             Text = "Product Pricings";
-            ItemListView.LabelEdit = true;
             RenderItems();
         }
 
@@ -62,7 +61,7 @@ namespace TrainDB {
             ItemListView.Columns.AddRange(new[] {
                 new ColumnHeader { Text = "Product" },
                 new ColumnHeader { Text = "Date" },
-                new ColumnHeader { Text = "Value (€/t)" }
+                new ColumnHeader { Text = "Value" }
             });
 
             ItemListView.Items.Clear();
@@ -70,7 +69,7 @@ namespace TrainDB {
                 var item = new ListViewItem(new[] {
                     price.Product.ToString(),
                     price.Date.ToString("d"),
-                    price.EurosPerTon.ToString("N")
+                    price.EurosPerTon.ToString("N") + " €/t"
                 }) { Tag = price };
 
                 ItemListView.Items.Add(item);

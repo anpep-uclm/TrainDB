@@ -69,7 +69,7 @@ namespace TrainDB {
                 ItemListView.Items.Add(new ListViewItem(new[] {
                     '#' + trainType.ID.ToString(),
                     trainType.Description,
-                    trainType.MaximumCapacity.ToString("N") + " tonnes"
+                    trainType.MaximumCapacity.ToString("N") + " t"
                 }) { Tag = trainType });
             }
 

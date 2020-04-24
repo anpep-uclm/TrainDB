@@ -111,12 +111,12 @@ namespace TrainDB {
         /// <param name="eventArgs">Arguments associated with this event</param>
         private void OnAddNewTypeButtonClick(object sender, EventArgs eventArgs) {
             using (var dialog = new ProductPropertiesDialog(new Product())) {
-                if (dialog.ShowDialog(this) != DialogResult.Cancel) {
+                if (dialog.ShowDialog(this) != DialogResult.Cancel)
                     Price.Product = dialog.Product;
-                    PopulateProducts();
-                    UpdateControlState();
-                }
             }
+
+            PopulateProducts();
+            UpdateControlState();
         }
 
         /// <summary>
@@ -125,12 +125,11 @@ namespace TrainDB {
         /// <param name="sender">Control that initiated the event</param>
         /// <param name="eventArgs">Arguments associated with this event</param>
         private void OnProductPropertiesButtonClick(object sender, EventArgs eventArgs) {
-            using (var dialog = new ProductPropertiesDialog(Price.Product)) {
-                if (dialog.ShowDialog(this) != DialogResult.Cancel) {
-                    PopulateProducts();
-                    UpdateControlState();
-                }
-            }
+            using (var dialog = new ProductPropertiesDialog(Price.Product))
+                dialog.ShowDialog(this);
+
+            PopulateProducts();
+            UpdateControlState();
         }
 
         /// <summary>
@@ -160,7 +159,6 @@ namespace TrainDB {
         /// <param name="eventArgs">Arguments associated with this event</param>
         private void OnApplyButtonClick(object sender, EventArgs eventArgs) {
             ApplyChanges();
-            this.applyButton.Enabled = false;
         }
 
         /// <summary>
