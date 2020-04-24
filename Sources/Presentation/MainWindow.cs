@@ -31,7 +31,8 @@ namespace TrainDB {
                 new TrainTypesTab(),
                 new TrainsTab(),
                 new ProductsTab(),
-                new PricesTab()
+                new PricesTab(),
+                new TripsTab()
             };
 
             foreach (var tab in objectTabs) {
@@ -84,6 +85,7 @@ namespace TrainDB {
                     Text = $"{Path.GetFileName(this.openFileDialog.FileName)} - {System.Windows.Forms.Application.ProductName}";
                     this.generalStatusBarPanel.Text = "Connection open";
                     this.mainTabControl.Visible = false;
+                    this.toolsMenuItem.Enabled = true;
 
                     // recreate tabs
                     this.mainTabControl.TabPages.Clear();
