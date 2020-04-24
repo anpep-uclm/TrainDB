@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -33,6 +34,35 @@ namespace TrainDB {
         public List<Product> ReadAll() {
             var products = DatabaseBroker.GetInstance(this.path)
                 .ExecuteQuery("SELECT ProductID, ProductDescription FROM Products");
+
+            Products.Clear();
+            foreach (var row in products) {
+                Products.Add(new Product((long) row["ProductID"]) {
+                    Description = (string) row["ProductDescription"]
+                });
+            }
+
+            return Products;
+        }
+
+        /// <summary>
+        ///     Reads all the products transported by a specific train on the given date range
+        /// </summary>
+        /// <param name="train">Train to filter by</param>
+        /// <param name="dateRange">Date range to filter by</param>
+        /// <returns>A list with the obtained data</returns>
+        public List<Product> ReadAll(Train train, (DateTime Start, DateTime End)? dateRange) {
+            if (train is null || dateRange is null)
+                return ReadAll();
+
+            var products = DatabaseBroker.GetInstance(this.path).ExecuteQuery(@"
+                SELECT Products.ProductID, Products.ProductDescription FROM Products
+                JOIN Trips ON Trips.Product = Products.ProductID
+                WHERE Trips.Train = @train AND Trips.TripDate BETWEEN @start AND @end",
+
+                ("train", train.ID),
+                ("start", dateRange?.Start.ToSQLiteDateFormat()),
+                ("end", dateRange?.End.ToSQLiteDateFormat()));
 
             Products.Clear();
             foreach (var row in products) {
